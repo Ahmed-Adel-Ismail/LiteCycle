@@ -21,11 +21,14 @@ public class MainActivity extends AppCompatActivity {
                 .onResumeInvoke(i -> Log.e("LiteCycle", "onResume invoked " + i))
                 .onResumeUpdate(i -> i + 1)
                 .onPauseInvoke(i -> Log.e("LiteCycle", "onPause invoked " + i))
+                .onDestroyInvoke(i -> Log.e("LiteCycle","onDestroy() invoked"))
+                .onDestroyUpdate(i -> 10)
+                .onFinishingInvoke(i -> Log.e("LiteCycle","isFinishing() invoked"))
                 .observe();
 
 
 
-        LiteCycle.byLazy(() -> getIntent().getBooleanExtra("EXTRA", false))
+        LiteCycle.defer(() -> getIntent().getBooleanExtra("EXTRA", false))
                 .forLifeCycle(this)
                 .onCreateInvoke(extra -> Log.e("LiteCycle", "extra boolean : " + extra))
                 .observe();

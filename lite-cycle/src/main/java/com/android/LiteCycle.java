@@ -19,7 +19,7 @@ public class LiteCycle implements LifecycleObserver {
      * @param <T>             the expected item type
      * @return a {@link LiteObserverFactory} to create the related {@link LiteObserver}
      */
-    public static <T> LiteObserverFactory<T> byLazy(Callable<T> itemInitializer) {
+    public static <T> LiteObserverFactory<T> defer(Callable<T> itemInitializer) {
         return new LiteObserverFactory<>(itemInitializer);
     }
 

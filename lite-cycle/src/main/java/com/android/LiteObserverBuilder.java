@@ -27,6 +27,7 @@ public abstract class LiteObserverBuilder<
     final List<Object> onPause = new LinkedList<>();
     final List<Object> onStop = new LinkedList<>();
     final List<Object> onDestroy = new LinkedList<>();
+    final List<Object> onFinishing = new LinkedList<>();
 
 
     LiteObserverBuilder(LifecycleOwner owner) {
@@ -164,6 +165,31 @@ public abstract class LiteObserverBuilder<
      */
     public final B onDestroyUpdate(Function<T, T> action) {
         this.onDestroy.add(action);
+        return (B) this;
+    }
+
+    /**
+     * add a {@link Consumer} that will be invoked in {@code onDestroy()} in-case that the
+     * {@link LifecycleOwner} is finishing (not rotating)
+     *
+     * @param action a {@link Consumer} to be invoked
+     * @return {@code this} instance for chaining
+     */
+    public final B onFinishingInvoke(Consumer<T> action) {
+        this.onFinishing.add(action);
+        return (B) this;
+    }
+
+    /**
+     * add a {@link Function} that will update the stored item, it will be invoked when
+     * {@code onDestroy()} is invoked, in-case that the
+     * {@link LifecycleOwner} is finishing (not rotating)
+     *
+     * @param action a {@link Function} to be invoked and it's result will update the stored item
+     * @return {@code this} instance for chaining
+     */
+    public final B onFinishingUpdate(Function<T, T> action) {
+        this.onFinishing.add(action);
         return (B) this;
     }
 

@@ -1,11 +1,12 @@
 package com.android;
 
+import android.app.Activity;
 import android.arch.lifecycle.Lifecycle;
 import android.arch.lifecycle.LifecycleObserver;
 import android.arch.lifecycle.LifecycleOwner;
 import android.arch.lifecycle.OnLifecycleEvent;
+import android.support.v4.app.Fragment;
 
-import java.lang.ref.WeakReference;
 import java.util.List;
 
 import io.reactivex.annotations.NonNull;
@@ -19,22 +20,24 @@ import io.reactivex.functions.Function;
  */
 abstract class LiteObserver<T> implements LifecycleObserver {
 
-    private final WeakReference<LifecycleOwner> owner;
+    private final LifecycleOwner owner;
     private final List<Object> onCreate;
     private final List<Object> onStart;
     private final List<Object> onResume;
     private final List<Object> onPause;
     private final List<Object> onStop;
     private final List<Object> onDestroy;
+    private final List<Object> onFinishing;
 
     LiteObserver(LiteObserverBuilder<T, ?, ?> builder) {
-        owner = new WeakReference<>(builder.owner);
+        owner = builder.owner;
         onCreate = builder.onCreate;
         onStart = builder.onStart;
         onResume = builder.onResume;
         onPause = builder.onPause;
         onStop = builder.onStop;
         onDestroy = builder.onDestroy;
+        onFinishing = builder.onFinishing;
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
@@ -93,10 +96,26 @@ abstract class LiteObserver<T> implements LifecycleObserver {
             invoke(action);
         }
 
+        if (isActivityFinishing() || isFragmentFinishing()) {
+            for (Object action : onFinishing) {
+                invoke(action);
+            }
+        }
+
+    }
+
+    private boolean isActivityFinishing() {
+        return owner instanceof Activity && ((Activity) owner).isFinishing();
+    }
+
+    private boolean isFragmentFinishing() {
+        return owner instanceof Fragment &&
+                (((Fragment) owner).getActivity() == null
+                        || ((Fragment) owner).getActivity().isFinishing());
     }
 
     LifeCycleObservation observe() {
-        return new LifeCycleObservation(owner.get(), this);
+        return new LifeCycleObservation(owner, this);
     }
 
 
