@@ -5,7 +5,8 @@ A library that helps implementing Android's LifeCycleObserver interface for vari
 
     LiteCycle.with(10)
             .forLifeCycle(this) // pass Activity or Fragment
-            .onCreateUpdate(i -> i + 1)
+            .onCreateInvoke(i -> Log.e("LiteCycle", "initial value " + i))
+            .onCreateUpdate(i -> i + 1)
             .onCreateInvoke(i -> Log.e("LiteCycle", "onCreate() invoked " + i))
             .onStartUpdate(i -> i + 1)
             .onStartInvoke(i -> Log.e("LiteCycle", "onStart() invoked " + i))
