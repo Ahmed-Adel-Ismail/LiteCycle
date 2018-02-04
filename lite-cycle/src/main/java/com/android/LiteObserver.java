@@ -12,6 +12,7 @@ import java.util.List;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
+import io.reactivex.subjects.BehaviorSubject;
 
 /**
  * the {@link LifecycleObserver} that will invoke the required functions in the life-cycle events
@@ -20,6 +21,7 @@ import io.reactivex.functions.Function;
  */
 abstract class LiteObserver<T> implements LifecycleObserver {
 
+    private final BehaviorSubject<T> subject;
     private final LifecycleOwner owner;
     private final List<Object> onCreate;
     private final List<Object> onStart;
@@ -30,6 +32,7 @@ abstract class LiteObserver<T> implements LifecycleObserver {
     private final List<Object> onFinishing;
 
     LiteObserver(LiteObserverBuilder<T, ?, ?> builder) {
+        subject = BehaviorSubject.create();
         owner = builder.owner;
         onCreate = builder.onCreate;
         onStart = builder.onStart;
@@ -53,12 +56,21 @@ abstract class LiteObserver<T> implements LifecycleObserver {
         if (action instanceof Consumer) {
             ((Consumer<T>) action).accept(getItem());
         } else if (action instanceof Function) {
-            setItem(((Function<T, T>) action).apply(getItem()));
+            updateItemAndNotifySubject((Function<T, T>) action);
         }
     }
 
     @NonNull
     abstract T getItem();
+
+    private void updateItemAndNotifySubject(Function<T, T> action) {
+        try {
+            setItem(action.apply(getItem()));
+            subject.onNext(getItem());
+        } catch (Throwable e) {
+            subject.onError(e);
+        }
+    }
 
     abstract void setItem(@NonNull T item);
 
@@ -100,6 +112,7 @@ abstract class LiteObserver<T> implements LifecycleObserver {
             for (Object action : onFinishing) {
                 invoke(action);
             }
+            subject.onComplete();
         }
 
     }
@@ -114,8 +127,9 @@ abstract class LiteObserver<T> implements LifecycleObserver {
                         || ((Fragment) owner).getActivity().isFinishing());
     }
 
-    LifeCycleObservation observe() {
-        return new LifeCycleObservation(owner, this);
+    BehaviorSubject<T> observe() {
+        owner.getLifecycle().addObserver(this);
+        return subject;
     }
 
 

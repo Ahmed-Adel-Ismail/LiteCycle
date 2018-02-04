@@ -13,8 +13,8 @@ public class MainPresenterImplementer implements MainPresenter {
     MainPresenterImplementer(MainView view) {
         LiteCycle.with(locationRetriever(view))
                 .forLifeCycle(view)
-                .onStartInvoke(locationRetriever -> locationRetriever.start())
-                .onStopInvoke(locationRetriever -> locationRetriever.stop())
+                .onStartInvoke(LocationRetriever::start)
+                .onStopInvoke(LocationRetriever::stop)
                 .observe();
     }
 

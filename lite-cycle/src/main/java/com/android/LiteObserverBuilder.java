@@ -7,6 +7,7 @@ import java.util.List;
 
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
+import io.reactivex.subjects.BehaviorSubject;
 
 /**
  * the abstract life-cycle builder
@@ -200,7 +201,7 @@ public abstract class LiteObserverBuilder<
      *
      * @return a {@link LifeCycleObservation}
      */
-    public final LifeCycleObservation observe() {
+    public final BehaviorSubject<T> observe() {
         return buildObserver().observe();
     }
 
