@@ -4,9 +4,9 @@ A library that helps implementing Android's LifeCycleObserver interface for vari
 # Sample Code :
 
     LiteCycle.with(10)
-            .forLifeCycle(this) // pass Activity or Fragment
-            .onCreateInvoke(i -> Log.e("LiteCycle", "initial value " + i))
-            .onCreateUpdate(i -> i + 1)
+            .forLifeCycle(this)
+            .onCreateInvoke(i -> Log.e("LiteCycle", "initial value " + i))
+            .onCreateUpdate(i -> i + 1)
             .onCreateInvoke(i -> Log.e("LiteCycle", "onCreate() invoked " + i))
             .onStartUpdate(i -> i + 1)
             .onStartInvoke(i -> Log.e("LiteCycle", "onStart() invoked " + i))
@@ -44,7 +44,20 @@ After initializing a LiteCycle with a value stored in it, you can use or update 
             .forLifeCycle(this) // pass Activity or Fragment
             .onCreateUpdate(i -> i + 1)
             
-this will update the stored value by adding one to it, in the onCreate() Event
+this will update the stored value by adding one to it, in the onCreate() Event ... you can invoke the life-cycle event related methods multiple times, and the passed functions will be executed in the same order, like for example :
+
+    .onCreateInvoke(i -> Log.e("LiteCycle", "initial value " + i))
+    .onCreateUpdate(i -> i + 1)
+    .onCreateInvoke(i -> Log.e("LiteCycle", "onCreate() invoked " + i))
+
+The above 3 lines will be executed in the same order when onCreate() event happens
+
+Also there are 2 types of actions, <b>update</b> and <b>invoke</b>, like 
+
+    .onResumeUpdate(i -> i + 1)
+    .onResumeInvoke(i -> Log.e("LiteCycle", "onResume() invoked " + i))
+
+The <b>update</b> operation takes the result of the passed function and updates the stored value in the <b>LiteCycle</b>, while the <b>invoke</b> operation just uses the value stored, but it does not change it
 
 at the end you need to invoke 
     
