@@ -92,6 +92,8 @@ Since version <b>1.0.0</b>, the <i>observe()</i> method returns an <b> Rx Java 2
     
 you do not need to care about <b>Observable</b> created from the <i>observe()</i> call, since it completes itself when the Life-Cycle Owner (Activity or Fragment) calls it's <i>onDestroy()</i>
 
+Notice that if the value is set to <b>null</b>, the Observable wont be notified since <b>RxJava 2</b> does not support <b>null</b> values
+
 # Gradle dependency 
 
     Step 1. Add the JitPack repository to your build file
@@ -107,5 +109,5 @@ you do not need to care about <b>Observable</b> created from the <i>observe()</i
     Step 2. Add the dependency
 
         dependencies {
-            compile 'com.github.Ahmed-Adel-Ismail:LiteCycle:1.0.1'
+            compile 'com.github.Ahmed-Adel-Ismail:LiteCycle:1.0.2'
         }
