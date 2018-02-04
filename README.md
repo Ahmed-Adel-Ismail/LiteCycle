@@ -74,6 +74,24 @@ There are functions like
      
 Those functions will not invoke while rotation, they will be invoked after onDestroy() in case of non-rotation events, where the Life-Cycle-Owner is about to be totally destroyed
 
+# Listen on value updates
+
+Since version <b>1.0.0</b>, the <i>observe()</i> method returns an <b> Rx Java 2 Observable </b> so you can subscribe to it and get notified when ever the value is changed, so in our sample example, we can write it this way
+
+    Observable<Integer> integer = LiteCycle.with(10)
+            .forLifeCycle(this)
+            .onCreateUpdate(i -> i + 1)
+            .onStartUpdate(i -> i + 1)
+            .onResumeUpdate(i -> i + 1)
+            .onPauseUpdate(i -> i + 1)
+            .onStopUpdate(i -> i + 1)
+            .onDestroyUpdate(i -> 10)
+            .observe();
+            
+    Disposable disposable = integer.subscribe(i -> Log.e("LiteCycle", "integer value " + i));
+    
+you do not need to care about <b>Observable</b> created from the <i>observe()</i> call, since it completes itself when the Life-Cycle Owner (Activity or Fragment) is totally finishing, how ever, you can dispose your <b>Disposable</b> in <i>onDestroy()</i>
+
 # Gradle dependency 
 
     Step 1. Add the JitPack repository to your build file
@@ -89,5 +107,5 @@ Those functions will not invoke while rotation, they will be invoked after onDes
     Step 2. Add the dependency
 
         dependencies {
-                compile 'com.github.Ahmed-Adel-Ismail:LiteCycle:0.0.3'
+                compile 'com.github.Ahmed-Adel-Ismail:LiteCycle:1.0.0'
         }
