@@ -116,7 +116,6 @@ abstract class LiteObserver<T> implements LifecycleObserver {
         }
 
         subject.onComplete();
-
     }
 
     private boolean isActivityFinishing() {
