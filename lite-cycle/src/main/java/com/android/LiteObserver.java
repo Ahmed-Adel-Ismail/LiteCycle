@@ -113,8 +113,9 @@ abstract class LiteObserver<T> implements LifecycleObserver {
             for (Object action : onFinishing) {
                 invoke(action);
             }
-            subject.onComplete();
         }
+
+        subject.onComplete();
 
     }
 

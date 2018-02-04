@@ -3,6 +3,7 @@ package com.sample;
 import android.location.Location;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.TextView;
 
 import com.android.LiteCycle;
@@ -60,6 +61,19 @@ public class ReactiveActivity extends AppCompatActivity {
             }
         };
     }
+
+    Observable<Integer> integer = LiteCycle.with(10)
+            .forLifeCycle(this)
+            .onCreateUpdate(i -> i + 1)
+            .onStartUpdate(i -> i + 1)
+            .onResumeUpdate(i -> i + 1)
+            .onPauseUpdate(i -> i + 1)
+            .onStopUpdate(i -> i + 1)
+            .onDestroyUpdate(i -> 10)
+            .observe();
+
+
+    Disposable disposable = integer.subscribe(i -> Log.e("LiteCycle", "integer value " + i));
 
 
 }
