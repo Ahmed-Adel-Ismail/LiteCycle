@@ -67,7 +67,7 @@ abstract class LiteObserver<T> implements LifecycleObserver {
     private void updateItemAndNotifySubject(Function<T, T> action) {
         try {
             setItem(action.apply(getItem()));
-            subject.onNext(getItem());
+            if (getItem() != null) subject.onNext(getItem());
         } catch (Throwable e) {
             subject.onError(e);
         }
