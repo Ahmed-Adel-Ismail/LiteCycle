@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 
 import java.util.List;
 
+import io.reactivex.Observable;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
@@ -127,7 +128,7 @@ abstract class LiteObserver<T> implements LifecycleObserver {
                         || ((Fragment) owner).getActivity().isFinishing());
     }
 
-    BehaviorSubject<T> observe() {
+    Observable<T> observe() {
         owner.getLifecycle().addObserver(this);
         return subject;
     }

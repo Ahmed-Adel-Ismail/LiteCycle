@@ -12,7 +12,6 @@ import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.subjects.BehaviorSubject;
 
 /**
  * Created by Ahmed Adel Ismail on 2/4/2018.
@@ -27,20 +26,20 @@ public class ReactiveActivity extends AppCompatActivity {
     private final Lazy<TextView> textView =
             Lazy.defer(() -> (TextView) findViewById(R.id.text_view));
 
-    private final BehaviorSubject<Disposable> tickerDisposable =
+    private final Observable<Disposable> tickerDisposable =
             LiteCycle.with((Disposable) null)
                     .forLifeCycle(this)
                     .onCreateUpdate(disposable -> ticker.subscribe(textView.call()::setText))
                     .onDestroyInvoke(this::dispose)
                     .observe();
 
-    private final BehaviorSubject<Integer> contentDisplayer =
+    private final Observable<Integer> contentDisplayer =
             LiteCycle.with(R.layout.activity_main)
                     .forLifeCycle(this)
                     .onCreateInvoke(this::setContentView)
                     .observe();
 
-    private final BehaviorSubject<LocationRetriever> locationRetriever =
+    private final Observable<LocationRetriever> locationRetriever =
             LiteCycle.defer(this::locationRetriever)
                     .forLifeCycle(this)
                     .onStartInvoke(LocationRetriever::start)

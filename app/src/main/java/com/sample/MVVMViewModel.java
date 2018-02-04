@@ -5,7 +5,7 @@ import android.arch.lifecycle.ViewModel;
 
 import com.android.LiteCycle;
 
-import io.reactivex.subjects.BehaviorSubject;
+import io.reactivex.Observable;
 
 /**
  * Created by Ahmed Adel Ismail on 2/4/2018.
@@ -13,13 +13,13 @@ import io.reactivex.subjects.BehaviorSubject;
 
 public class MVVMViewModel extends ViewModel {
 
-    private BehaviorSubject<Integer> methodIndexer;
+    private Observable<Integer> methodIndexer;
 
     public void initialize(LifecycleOwner lifecycleOwner) {
         methodIndexer = createMethodIndexer(lifecycleOwner);
     }
 
-    private BehaviorSubject<Integer> createMethodIndexer(LifecycleOwner lifecycleOwner) {
+    private Observable<Integer> createMethodIndexer(LifecycleOwner lifecycleOwner) {
         return LiteCycle.with(0)
                 .forLifeCycle(lifecycleOwner)
                 .onCreateUpdate(i -> 1)
@@ -31,7 +31,7 @@ public class MVVMViewModel extends ViewModel {
                 .observe();
     }
 
-    public BehaviorSubject<Integer> getMethodIndexer() {
+    public Observable<Integer> getMethodIndexer() {
         return methodIndexer;
     }
 }

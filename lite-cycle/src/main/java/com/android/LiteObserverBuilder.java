@@ -5,9 +5,9 @@ import android.arch.lifecycle.LifecycleOwner;
 import java.util.LinkedList;
 import java.util.List;
 
+import io.reactivex.Observable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
-import io.reactivex.subjects.BehaviorSubject;
 
 /**
  * the abstract life-cycle builder
@@ -201,7 +201,7 @@ public abstract class LiteObserverBuilder<
      *
      * @return a {@link LifeCycleObservation}
      */
-    public final BehaviorSubject<T> observe() {
+    public final Observable<T> observe() {
         return buildObserver().observe();
     }
 
