@@ -90,7 +90,7 @@ Since version <b>1.0.0</b>, the <i>observe()</i> method returns an <b> Rx Java 2
             
     Disposable disposable = integer.subscribe(i -> Log.e("LiteCycle", "integer value " + i));
     
-you do not need to care about <b>Observable</b> created from the <i>observe()</i> call, since it completes itself when the Life-Cycle Owner (Activity or Fragment) is totally finishing, how ever, you can dispose your <b>Disposable</b> in <i>onDestroy()</i>
+you do not need to care about <b>Observable</b> created from the <i>observe()</i> call, since it completes itself when the Life-Cycle Owner (Activity or Fragment) calls it's <i>onDestroy()</i>
 
 # Gradle dependency 
 
@@ -107,5 +107,5 @@ you do not need to care about <b>Observable</b> created from the <i>observe()</i
     Step 2. Add the dependency
 
         dependencies {
-                compile 'com.github.Ahmed-Adel-Ismail:LiteCycle:1.0.0'
+            compile 'com.github.Ahmed-Adel-Ismail:LiteCycle:1.0.1'
         }
