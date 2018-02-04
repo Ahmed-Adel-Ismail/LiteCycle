@@ -107,5 +107,5 @@ you do not need to care about <b>Observable</b> created from the <i>observe()</i
     Step 2. Add the dependency
 
         dependencies {
-                compile 'com.github.Ahmed-Adel-Ismail:LiteCycle:1.0.1'
+            compile 'com.github.Ahmed-Adel-Ismail:LiteCycle:1.0.1'
         }
