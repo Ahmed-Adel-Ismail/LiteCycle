@@ -17,7 +17,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".SampleActivity"/>
-        <activity android:name=".MVVMActivity"/>
+        <activity android:name=".ReactiveActivity"/>
     </application>
 
 </manifest>
