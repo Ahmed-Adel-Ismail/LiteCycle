@@ -103,12 +103,12 @@ The Observable created by <i>observe()</i> method is a <b>BehaviorSubject</b>, i
     
 you do not need to care about <b>Observable</b> created from the <i>observe()</i> call, since it completes itself when the Life-Cycle Owner (Activity or Fragment) calls it's <i>onDestroy()</i>, so you can safely write the previous code as follows :
 
-    Observable<Integer> integer = LiteCycle.with(10)
-                    .forLifeCycle(this)
-                    .onResumeUpdate(i -> i + 1)
-                    .onPauseUpdate(i -> i + 1)
-                    .observe()
-                    .subscribe(i -> Log.e("LiteCycle", "integer value " + i))
+    LiteCycle.with(10)
+            .forLifeCycle(this)
+            .onResumeUpdate(i -> i + 1)
+            .onPauseUpdate(i -> i + 1)
+            .observe()
+            .subscribe(i -> Log.e("LiteCycle", "integer value " + i))
 
 This practice is perfect when declaring RxJava2 Disposables, since you can guarantee that they are disposed when <i>onDestroy()</i> is called
 
