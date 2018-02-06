@@ -9,6 +9,10 @@ import android.util.Log;
 
 import com.android.LiteCycle;
 
+import java.util.concurrent.TimeUnit;
+
+import io.reactivex.Observable;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.subjects.PublishSubject;
 
 public class MainActivity extends AppCompatActivity implements MainView {
@@ -66,6 +70,12 @@ public class MainActivity extends AppCompatActivity implements MainView {
                 .observe(PublishSubject.create())
                 .subscribe(i -> Log.e("MainActivity", "PublishSubject value updated : " + i));
 
+
+        LiteCycle.with(intervalDisposable())
+                .forLifeCycle(this)
+                .onDestroyInvoke(Disposable::dispose)
+                .observe();
+
     }
 
     @NonNull
@@ -78,4 +88,11 @@ public class MainActivity extends AppCompatActivity implements MainView {
     public void updateLocationOnMap(Location location) {
         // update location on map
     }
+
+    Disposable intervalDisposable(){
+        return Observable.interval(2, TimeUnit.SECONDS)
+                .subscribe(this::doSomething);
+    }
+
+    void doSomething(Long tickCount){}
 }

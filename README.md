@@ -92,7 +92,35 @@ Since version <b>1.0.0</b>, the <i>observe()</i> method returns an <b> Rx Java 2
             
     Disposable disposable = integer.subscribe(i -> Log.e("LiteCycle", "integer value " + i));
     
-you do not need to care about <b>Observable</b> created from the <i>observe()</i> call, since it completes itself when the Life-Cycle Owner (Activity or Fragment) calls it's <i>onDestroy()</i>
+The Observable created by <i>observe()</i> method is a <b>BehaviorSubject</b>, if you want a different type, you can use the overloaded version of <i>observe(Subject)</i>, as follows :
+
+    Observable<Integer> integer = LiteCycle.with(10)
+                .forLifeCycle(this)
+                .onResumeUpdate(i -> i + 1)
+                .onPauseUpdate(i -> i + 1)
+                .observe(PublishSubject.create());
+
+    
+you do not need to care about <b>Observable</b> created from the <i>observe()</i> call, since it completes itself when the Life-Cycle Owner (Activity or Fragment) calls it's <i>onDestroy()</i>, so you can safely write the previous code as follows :
+
+    Observable<Integer> integer = LiteCycle.with(10)
+                    .forLifeCycle(this)
+                    .onResumeUpdate(i -> i + 1)
+                    .onPauseUpdate(i -> i + 1)
+                    .observe()
+                    .subscribe(i -> Log.e("LiteCycle", "integer value " + i))
+
+This practice is perfect when declaring RxJava2 Disposables, since you can guarantee that they are disposed when <i>onDestroy()</i> is called
+
+    LiteCycle.with(interval())
+            .forLifeCycle(this)
+            .onDestroyInvoke(Disposable::dispose)
+            .observe();
+            
+    Disposable interval(){
+        return Observable.interval(2, TimeUnit.SECONDS)
+                .subscribe(this::doSomething);
+    }
 
 Notice that if the value is set to <b>null</b>, the Observable wont be notified since <b>RxJava 2</b> does not support <b>null</b> values
 
@@ -111,5 +139,5 @@ Notice that if the value is set to <b>null</b>, the Observable wont be notified 
     Step 2. Add the dependency
 
         dependencies {
-            compile 'com.github.Ahmed-Adel-Ismail:LiteCycle:1.1.0'
+            compile 'com.github.Ahmed-Adel-Ismail:LiteCycle:1.1.1'
         }
