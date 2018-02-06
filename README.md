@@ -109,5 +109,5 @@ Notice that if the value is set to <b>null</b>, the Observable wont be notified 
     Step 2. Add the dependency
 
         dependencies {
-            compile 'com.github.Ahmed-Adel-Ismail:LiteCycle:1.0.2'
+            compile 'com.github.Ahmed-Adel-Ismail:LiteCycle:1.1.0'
         }
