@@ -9,6 +9,8 @@ import android.util.Log;
 
 import com.android.LiteCycle;
 
+import io.reactivex.subjects.PublishSubject;
+
 public class MainActivity extends AppCompatActivity implements MainView {
 
     private MainPresenter presenter;
@@ -55,6 +57,14 @@ public class MainActivity extends AppCompatActivity implements MainView {
                 .onPauseUpdate(i -> 4)
                 .observe()
                 .subscribe(i -> Log.e("MainActivity", "defer(null) value updated : " + i));
+
+
+        LiteCycle.with(0)
+                .forLifeCycle(this)
+                .onResumeUpdate(i -> 30)
+                .onPauseUpdate(i -> 40)
+                .observe(PublishSubject.create())
+                .subscribe(i -> Log.e("MainActivity", "PublishSubject value updated : " + i));
 
     }
 

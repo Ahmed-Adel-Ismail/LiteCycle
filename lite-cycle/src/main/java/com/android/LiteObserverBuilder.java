@@ -1,6 +1,7 @@
 package com.android;
 
 import android.arch.lifecycle.LifecycleOwner;
+import android.support.annotation.NonNull;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -8,6 +9,8 @@ import java.util.List;
 import io.reactivex.Observable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
+import io.reactivex.subjects.BehaviorSubject;
+import io.reactivex.subjects.Subject;
 
 /**
  * the abstract life-cycle builder
@@ -194,11 +197,25 @@ public abstract class LiteObserverBuilder<T> {
     /**
      * observe on the life-Cycle events
      *
-     * @return the {@link Observable} which will be notified when the value is updated
+     * @return the {@link Observable} which will be notified when the value is updated, this is
+     * a {@link BehaviorSubject} by default, to change this type you may need to use
+     * {@link #observe(Subject)} instead
      */
     public final Observable<T> observe() {
         return buildObserver().observe();
     }
 
     abstract LiteObserver<T> buildObserver();
+
+    /**
+     * observe on the life-Cycle events
+     *
+     * @param observableType the type of the {@link Subject} that listens to the updates of
+     *                       the value from the life-cycle events, the default one used by
+     *                       {@link #observe()} is {@link BehaviorSubject}
+     * @return the {@link Observable} which will be notified when the value is updated
+     */
+    public final Observable<T> observe(@NonNull Subject<T> observableType) {
+        return buildObserver().observe(observableType);
+    }
 }

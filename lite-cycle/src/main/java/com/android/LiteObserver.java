@@ -5,12 +5,12 @@ import android.arch.lifecycle.Lifecycle;
 import android.arch.lifecycle.LifecycleObserver;
 import android.arch.lifecycle.LifecycleOwner;
 import android.arch.lifecycle.OnLifecycleEvent;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 
 import java.util.List;
 
 import io.reactivex.Observable;
-import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.subjects.BehaviorSubject;
@@ -23,7 +23,7 @@ import io.reactivex.subjects.Subject;
  */
 public abstract class LiteObserver<T> implements LifecycleObserver {
 
-    private final Subject<T> subject;
+    private Subject<T> subject;
     private final LifecycleOwner owner;
     private final List<Object> onCreate;
     private final List<Object> onStart;
@@ -34,7 +34,6 @@ public abstract class LiteObserver<T> implements LifecycleObserver {
     private final List<Object> onFinishing;
 
     LiteObserver(LiteObserverBuilder<T> builder) {
-        subject = BehaviorSubject.create();
         owner = builder.owner;
         onCreate = builder.onCreate;
         onStart = builder.onStart;
@@ -130,8 +129,13 @@ public abstract class LiteObserver<T> implements LifecycleObserver {
     }
 
     Observable<T> observe() {
-        owner.getLifecycle().addObserver(this);
+        return observe(BehaviorSubject.<T>create());
+    }
+
+    Observable<T> observe(@NonNull Subject<T> observableType) {
+        subject = observableType;
         initializeSubject(subject);
+        owner.getLifecycle().addObserver(this);
         return subject;
     }
 

@@ -1,3 +1,5 @@
+[![](https://jitpack.io/v/Ahmed-Adel-Ismail/LiteCycle.svg)](https://jitpack.io/#Ahmed-Adel-Ismail/LiteCycle)
+
 # LiteCycle
 A library that helps implementing Android's LifeCycleObserver interface for variables instead of Classes
 
