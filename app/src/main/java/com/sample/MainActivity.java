@@ -1,6 +1,5 @@
 package com.sample;
 
-import android.arch.lifecycle.ViewModelProviders;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -9,8 +8,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.android.LiteCycle;
-
-import io.reactivex.disposables.Disposable;
 
 public class MainActivity extends AppCompatActivity implements MainView {
 
@@ -22,23 +19,49 @@ public class MainActivity extends AppCompatActivity implements MainView {
         setContentView(R.layout.activity_main);
         presenter = new MainPresenterImplementer(this);
 
-        MVVMViewModel viewModel = ViewModelProviders.of(this).get(MVVMViewModel.class);
-        viewModel.initialize(this);
-
-        LiteCycle.with(logMethodIndex(viewModel))
+        LiteCycle.with(0)
                 .forLifeCycle(this)
-                .onDestroyInvoke(this::dispose)
-                .observe();
+                .onCreateUpdate(i -> 1)
+                .onStartUpdate(i -> 2)
+                .onResumeUpdate(i -> 3)
+                .onPauseUpdate(i -> 4)
+                .onStopUpdate(i -> 5)
+                .onDestroyUpdate(i -> 6)
+                .observe()
+                .subscribe(i -> Log.e("MainActivity", "non-null value updated : " + i));
+
+        LiteCycle.with(null)
+                .forLifeCycle(this)
+                .onCreateUpdate(i -> 1)
+                .onStartUpdate(i -> 2)
+                .onResumeUpdate(i -> 3)
+                .onPauseUpdate(i -> 4)
+                .onStopUpdate(i -> 5)
+                .onDestroyUpdate(i -> 6)
+                .observe()
+                .subscribe(i -> Log.e("MainActivity", "null value updated : " + i));
+
+
+        LiteCycle.defer(this::lazyInitialization)
+                .forLifeCycle(this)
+                .onResumeUpdate(i -> 3)
+                .onPauseUpdate(i -> 4)
+                .observe()
+                .subscribe(i -> Log.e("MainActivity", "lazy value updated : " + i));
+
+        LiteCycle.defer(null)
+                .forLifeCycle(this)
+                .onResumeUpdate(i -> 3)
+                .onPauseUpdate(i -> 4)
+                .observe()
+                .subscribe(i -> Log.e("MainActivity", "defer(null) value updated : " + i));
+
     }
 
     @NonNull
-    private Disposable logMethodIndex(MVVMViewModel viewModel) {
-        return viewModel.getMethodIndexer()
-                .subscribe(i -> Log.e("MainActivity", "method index :" + i));
-    }
-
-    private void dispose(Disposable disposable) {
-        if (!disposable.isDisposed()) disposable.dispose();
+    private Integer lazyInitialization() {
+        Log.e("MainActivity", "lazy initialization triggered");
+        return 0;
     }
 
     @Override

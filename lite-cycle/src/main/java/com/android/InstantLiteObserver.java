@@ -2,6 +2,8 @@ package com.android;
 
 import android.arch.lifecycle.LifecycleOwner;
 
+import io.reactivex.subjects.Subject;
+
 /**
  * an Observer that starts with an already initialized item
  * <p>
@@ -26,7 +28,12 @@ class InstantLiteObserver<T> extends LiteObserver<T> {
         this.item = item;
     }
 
-    static final class Builder<T> extends LiteObserverBuilder<T, Builder<T>, InstantLiteObserver<T>> {
+    @Override
+    void initializeSubject(Subject<T> subject) {
+        if (item != null) subject.onNext(item);
+    }
+
+    static final class Builder<T> extends LiteObserverBuilder<T> {
 
         private T item;
 
@@ -35,8 +42,10 @@ class InstantLiteObserver<T> extends LiteObserver<T> {
             this.item = item;
         }
 
-        InstantLiteObserver<T> buildObserver() {
+        LiteObserver<T> buildObserver() {
             return new InstantLiteObserver<>(this);
         }
+
+
     }
 }

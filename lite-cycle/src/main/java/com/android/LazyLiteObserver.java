@@ -43,7 +43,7 @@ class LazyLiteObserver<T> extends LiteObserver<T> {
         };
     }
 
-    static final class Builder<T> extends LiteObserverBuilder<T, Builder<T>, LazyLiteObserver<T>> {
+    static final class Builder<T> extends LiteObserverBuilder<T> {
 
         private Callable<T> itemInitializer;
 
@@ -52,7 +52,7 @@ class LazyLiteObserver<T> extends LiteObserver<T> {
             this.itemInitializer = itemInitializer;
         }
 
-        LazyLiteObserver<T> buildObserver() {
+        LiteObserver<T> buildObserver() {
             return new LazyLiteObserver<>(this);
         }
     }

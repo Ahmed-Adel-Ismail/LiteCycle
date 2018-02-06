@@ -16,10 +16,7 @@ import io.reactivex.functions.Function;
  */
 
 @SuppressWarnings("unchecked")
-public abstract class LiteObserverBuilder<
-        T,
-        B extends LiteObserverBuilder<T, B, R>,
-        R extends LiteObserver<T>> {
+public abstract class LiteObserverBuilder<T> {
 
     final LifecycleOwner owner;
     final List<Object> onCreate = new LinkedList<>();
@@ -41,14 +38,14 @@ public abstract class LiteObserverBuilder<
      * @param action a {@link Consumer} to be invoked
      * @return {@code this} instance for chaining
      */
-    public final B onCreateInvoke(Consumer<T> action) {
+    public final LiteObserverBuilder<T> onCreateInvoke(Consumer<T> action) {
         this.onCreate.add(action);
-        return (B) this;
+        return this;
     }
 
-    public final B onCreateUpdate(Function<T, T> action) {
+    public final LiteObserverBuilder<T> onCreateUpdate(Function<T, T> action) {
         this.onCreate.add(action);
-        return (B) this;
+        return this;
     }
 
     /**
@@ -57,9 +54,9 @@ public abstract class LiteObserverBuilder<
      * @param action a {@link Consumer} to be invoked
      * @return {@code this} instance for chaining
      */
-    public final B onStartInvoke(Consumer<T> action) {
+    public final LiteObserverBuilder<T> onStartInvoke(Consumer<T> action) {
         this.onStart.add(action);
-        return (B) this;
+        return this;
     }
 
     /**
@@ -69,9 +66,9 @@ public abstract class LiteObserverBuilder<
      * @param action a {@link Function} to be invoked and it's result will update the stored item
      * @return {@code this} instance for chaining
      */
-    public final B onStartUpdate(Function<T, T> action) {
+    public final LiteObserverBuilder<T> onStartUpdate(Function<T, T> action) {
         this.onStart.add(action);
-        return (B) this;
+        return this;
     }
 
     /**
@@ -80,9 +77,9 @@ public abstract class LiteObserverBuilder<
      * @param action a {@link Consumer} to be invoked
      * @return {@code this} instance for chaining
      */
-    public final B onResumeInvoke(Consumer<T> action) {
+    public final LiteObserverBuilder<T> onResumeInvoke(Consumer<T> action) {
         this.onResume.add(action);
-        return (B) this;
+        return this;
     }
 
     /**
@@ -92,9 +89,9 @@ public abstract class LiteObserverBuilder<
      * @param action a {@link Function} to be invoked and it's result will update the stored item
      * @return {@code this} instance for chaining
      */
-    public final B onResumeUpdate(Function<T, T> action) {
+    public final LiteObserverBuilder<T> onResumeUpdate(Function<T, T> action) {
         this.onResume.add(action);
-        return (B) this;
+        return this;
     }
 
 
@@ -104,9 +101,9 @@ public abstract class LiteObserverBuilder<
      * @param action a {@link Consumer} to be invoked
      * @return {@code this} instance for chaining
      */
-    public final B onPauseInvoke(Consumer<T> action) {
+    public final LiteObserverBuilder<T> onPauseInvoke(Consumer<T> action) {
         this.onPause.add(action);
-        return (B) this;
+        return this;
     }
 
     /**
@@ -116,9 +113,9 @@ public abstract class LiteObserverBuilder<
      * @param action a {@link Function} to be invoked and it's result will update the stored item
      * @return {@code this} instance for chaining
      */
-    public final B onPauseUpdate(Function<T, T> action) {
+    public final LiteObserverBuilder<T> onPauseUpdate(Function<T, T> action) {
         this.onPause.add(action);
-        return (B) this;
+        return this;
     }
 
 
@@ -128,9 +125,9 @@ public abstract class LiteObserverBuilder<
      * @param action a {@link Consumer} to be invoked
      * @return {@code this} instance for chaining
      */
-    public final B onStopInvoke(Consumer<T> action) {
+    public final LiteObserverBuilder<T> onStopInvoke(Consumer<T> action) {
         this.onStop.add(action);
-        return (B) this;
+        return this;
     }
 
     /**
@@ -140,9 +137,9 @@ public abstract class LiteObserverBuilder<
      * @param action a {@link Function} to be invoked and it's result will update the stored item
      * @return {@code this} instance for chaining
      */
-    public final B onStopUpdate(Function<T, T> action) {
+    public final LiteObserverBuilder<T> onStopUpdate(Function<T, T> action) {
         this.onStop.add(action);
-        return (B) this;
+        return this;
     }
 
 
@@ -152,9 +149,9 @@ public abstract class LiteObserverBuilder<
      * @param action a {@link Consumer} to be invoked
      * @return {@code this} instance for chaining
      */
-    public final B onDestroyInvoke(Consumer<T> action) {
+    public final LiteObserverBuilder<T> onDestroyInvoke(Consumer<T> action) {
         this.onDestroy.add(action);
-        return (B) this;
+        return this;
     }
 
     /**
@@ -164,9 +161,9 @@ public abstract class LiteObserverBuilder<
      * @param action a {@link Function} to be invoked and it's result will update the stored item
      * @return {@code this} instance for chaining
      */
-    public final B onDestroyUpdate(Function<T, T> action) {
+    public final LiteObserverBuilder<T> onDestroyUpdate(Function<T, T> action) {
         this.onDestroy.add(action);
-        return (B) this;
+        return this;
     }
 
     /**
@@ -176,9 +173,9 @@ public abstract class LiteObserverBuilder<
      * @param action a {@link Consumer} to be invoked
      * @return {@code this} instance for chaining
      */
-    public final B onFinishingInvoke(Consumer<T> action) {
+    public final LiteObserverBuilder<T> onFinishingInvoke(Consumer<T> action) {
         this.onFinishing.add(action);
-        return (B) this;
+        return this;
     }
 
     /**
@@ -189,21 +186,19 @@ public abstract class LiteObserverBuilder<
      * @param action a {@link Function} to be invoked and it's result will update the stored item
      * @return {@code this} instance for chaining
      */
-    public final B onFinishingUpdate(Function<T, T> action) {
+    public final LiteObserverBuilder<T> onFinishingUpdate(Function<T, T> action) {
         this.onFinishing.add(action);
-        return (B) this;
+        return this;
     }
 
     /**
-     * build the {@link LifeCycleObservation} which will cause all the passed
-     * {@link Consumer Consumers} and {@link Function Functions} to be executed in the
-     * life-cycle methods
+     * observe on the life-Cycle events
      *
-     * @return a {@link LifeCycleObservation}
+     * @return the {@link Observable} which will be notified when the value is updated
      */
     public final Observable<T> observe() {
         return buildObserver().observe();
     }
 
-    abstract R buildObserver();
+    abstract LiteObserver<T> buildObserver();
 }

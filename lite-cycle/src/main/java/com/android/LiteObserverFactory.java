@@ -30,11 +30,11 @@ public class LiteObserverFactory<T> {
      * @param lifecycleOwner the {@link LifecycleOwner}
      * @return a {@link LiteObserverFactory} to handle completing the operation
      */
-    public LiteObserverBuilder<T, ?, ?> forLifeCycle(LifecycleOwner lifecycleOwner) {
-        if (item != null) {
-            return new InstantLiteObserver.Builder<>(lifecycleOwner, item);
-        } else {
+    public LiteObserverBuilder<T> forLifeCycle(LifecycleOwner lifecycleOwner) {
+        if (itemInitializer != null) {
             return new LazyLiteObserver.Builder<>(lifecycleOwner, itemInitializer);
+        } else {
+            return new InstantLiteObserver.Builder<>(lifecycleOwner, item);
         }
     }
 

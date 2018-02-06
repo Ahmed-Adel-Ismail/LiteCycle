@@ -14,15 +14,16 @@ import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.subjects.BehaviorSubject;
+import io.reactivex.subjects.Subject;
 
 /**
  * the {@link LifecycleObserver} that will invoke the required functions in the life-cycle events
  * <p>
  * Created by Ahmed Adel Ismail on 1/29/2018.
  */
-abstract class LiteObserver<T> implements LifecycleObserver {
+public abstract class LiteObserver<T> implements LifecycleObserver {
 
-    private final BehaviorSubject<T> subject;
+    private final Subject<T> subject;
     private final LifecycleOwner owner;
     private final List<Object> onCreate;
     private final List<Object> onStart;
@@ -32,7 +33,7 @@ abstract class LiteObserver<T> implements LifecycleObserver {
     private final List<Object> onDestroy;
     private final List<Object> onFinishing;
 
-    LiteObserver(LiteObserverBuilder<T, ?, ?> builder) {
+    LiteObserver(LiteObserverBuilder<T> builder) {
         subject = BehaviorSubject.create();
         owner = builder.owner;
         onCreate = builder.onCreate;
@@ -130,7 +131,17 @@ abstract class LiteObserver<T> implements LifecycleObserver {
 
     Observable<T> observe() {
         owner.getLifecycle().addObserver(this);
+        initializeSubject(subject);
         return subject;
+    }
+
+    /**
+     * template method for initializing the {@link Subject} by the subclasses
+     *
+     * @param subject the {@link Subject} that monitors the item changes
+     */
+    void initializeSubject(Subject<T> subject) {
+        // do nothing
     }
 
 
