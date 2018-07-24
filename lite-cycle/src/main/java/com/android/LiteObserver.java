@@ -148,5 +148,4 @@ public abstract class LiteObserver<T> implements LifecycleObserver {
         // do nothing
     }
 
-
 }

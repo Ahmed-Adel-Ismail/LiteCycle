@@ -1,6 +1,7 @@
 package com.sample;
 
 import android.location.Location;
+import android.util.Log;
 
 import com.android.LiteCycle;
 
@@ -14,8 +15,12 @@ public class MainPresenterImplementer implements MainPresenter {
         LiteCycle.with(locationRetriever(view))
                 .forLifeCycle(view)
                 .onStartInvoke(LocationRetriever::start)
+                .onResumeInvoke(LocationRetriever::changeLocation)
+                .onResumeInvoke(LocationRetriever::changeLocation)
+                .onResumeInvoke(LocationRetriever::changeLocation)
+                .onResumeInvoke(LocationRetriever::changeLocation)
                 .onStopInvoke(LocationRetriever::stop)
-                .observe();
+                .build();
     }
 
     private LocationRetriever locationRetriever(MainView view) {

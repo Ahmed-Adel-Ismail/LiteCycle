@@ -1,5 +1,6 @@
 package com.android;
 
+import android.annotation.SuppressLint;
 import android.arch.lifecycle.LifecycleOwner;
 import android.support.annotation.NonNull;
 
@@ -18,6 +19,7 @@ import io.reactivex.subjects.Subject;
  * Created by Ahmed Adel Ismail on 1/29/2018.
  */
 
+@SuppressLint("CheckResult")
 @SuppressWarnings("unchecked")
 public abstract class LiteObserverBuilder<T> {
 
@@ -203,6 +205,13 @@ public abstract class LiteObserverBuilder<T> {
      */
     public final Observable<T> observe() {
         return buildObserver().observe();
+    }
+
+    /**
+     * build the life-cycle observer
+     */
+    public final void build() {
+        observe();
     }
 
     abstract LiteObserver<T> buildObserver();

@@ -1,5 +1,6 @@
 package com.sample;
 
+import android.annotation.SuppressLint;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -18,6 +19,7 @@ import io.reactivex.subjects.PublishSubject;
 public class MainActivity extends AppCompatActivity implements MainView {
 
     private MainPresenter presenter;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -74,7 +76,7 @@ public class MainActivity extends AppCompatActivity implements MainView {
         LiteCycle.with(intervalDisposable())
                 .forLifeCycle(this)
                 .onDestroyInvoke(Disposable::dispose)
-                .observe();
+                .build();
 
     }
 
@@ -86,7 +88,7 @@ public class MainActivity extends AppCompatActivity implements MainView {
 
     @Override
     public void updateLocationOnMap(Location location) {
-        // update location on map
+        Log.e("MainActivity","updateLocationOnMap() invoked");
     }
 
     Disposable intervalDisposable(){
@@ -94,5 +96,7 @@ public class MainActivity extends AppCompatActivity implements MainView {
                 .subscribe(this::doSomething);
     }
 
-    void doSomething(Long tickCount){}
+    void doSomething(Long tickCount){
+        Log.e("MainActivity","doSomething("+tickCount+") invoked");
+    }
 }

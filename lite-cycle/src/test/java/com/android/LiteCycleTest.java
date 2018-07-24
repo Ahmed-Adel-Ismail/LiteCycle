@@ -343,6 +343,33 @@ public class LiteCycleTest {
     }
 
     @Test
+    public void buildWithUpdatingValueThenUpdateValue() {
+        final int[] result = {0};
+        MockLifeCycleOwner owner = new MockLifeCycleOwner();
+
+        LiteCycle.with(result[0])
+                .forLifeCycle(owner)
+                .onCreateUpdate(new Function<Integer, Integer>() {
+                    @Override
+                    public Integer apply(Integer integer) throws Exception {
+                        return 1;
+                    }
+                })
+                .onResumeInvoke(new Consumer<Integer>() {
+                    @Override
+                    public void accept(Integer integer) throws Exception {
+                        result[0] = integer;
+                    }
+                })
+                .build();
+
+        owner.create();
+        owner.resume();
+
+        assertEquals(1,result[0]);
+    }
+
+    @Test
     public void observeWithPublishSubjectParameterThenReturnPublishSubject() {
         Object subject = LiteCycle.with(0)
                 .forLifeCycle(new MockLifeCycleOwner())

@@ -17,6 +17,10 @@ public abstract class LocationRetriever {
         Log.e("LocationRetriever","stop() invoked");
     }
 
+    void changeLocation(){
+        onLocationChanged(null);
+    }
+
     public abstract void onLocationChanged(Location location);
 
 
