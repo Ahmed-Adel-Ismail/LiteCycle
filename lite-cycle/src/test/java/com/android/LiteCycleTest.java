@@ -338,12 +338,12 @@ public class LiteCycleTest {
     public void observeWithNoParameterThenReturnBehaviorSubject() {
         Object subject = LiteCycle.with(0)
                 .forLifeCycle(new MockLifeCycleOwner())
-                .observe();
+                .observe(BehaviorSubject.<Integer>create());
         assertTrue(subject instanceof BehaviorSubject);
     }
 
     @Test
-    public void buildWithUpdatingValueThenUpdateValue() {
+    public void observeWithUpdatingValueThenUpdateValue() {
         final int[] result = {0};
         MockLifeCycleOwner owner = new MockLifeCycleOwner();
 
@@ -361,7 +361,7 @@ public class LiteCycleTest {
                         result[0] = integer;
                     }
                 })
-                .build();
+                .observe();
 
         owner.create();
         owner.resume();

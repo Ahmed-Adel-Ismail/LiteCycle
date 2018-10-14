@@ -20,7 +20,7 @@ public class MainPresenterImplementer implements MainPresenter {
                 .onResumeInvoke(LocationRetriever::changeLocation)
                 .onResumeInvoke(LocationRetriever::changeLocation)
                 .onStopInvoke(LocationRetriever::stop)
-                .build();
+                .observe();
     }
 
     private LocationRetriever locationRetriever(MainView view) {

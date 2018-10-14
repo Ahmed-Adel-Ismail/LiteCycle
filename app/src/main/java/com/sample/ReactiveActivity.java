@@ -13,6 +13,7 @@ import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.subjects.BehaviorSubject;
 
 /**
  * Created by Ahmed Adel Ismail on 2/4/2018.
@@ -32,20 +33,20 @@ public class ReactiveActivity extends AppCompatActivity {
                     .forLifeCycle(this)
                     .onCreateUpdate(disposable -> ticker.subscribe(textView.call()::setText))
                     .onDestroyInvoke(this::dispose)
-                    .observe();
+                    .observe(BehaviorSubject.create());
 
     private final Observable<Integer> contentDisplayer =
             LiteCycle.with(R.layout.activity_main)
                     .forLifeCycle(this)
                     .onCreateInvoke(this::setContentView)
-                    .observe();
+                    .observe(BehaviorSubject.create());
 
     private final Observable<LocationRetriever> locationRetriever =
             LiteCycle.defer(this::locationRetriever)
                     .forLifeCycle(this)
                     .onStartInvoke(LocationRetriever::start)
                     .onStopInvoke(LocationRetriever::stop)
-                    .observe();
+                    .observe(BehaviorSubject.create());
 
     private void dispose(Disposable disposable) {
         if (!disposable.isDisposed()) disposable.dispose();
@@ -70,7 +71,7 @@ public class ReactiveActivity extends AppCompatActivity {
             .onPauseUpdate(i -> i + 1)
             .onStopUpdate(i -> i + 1)
             .onDestroyUpdate(i -> 10)
-            .observe();
+            .observe(BehaviorSubject.create());
 
 
     Disposable disposable = integer.subscribe(i -> Log.e("LiteCycle", "integer value " + i));

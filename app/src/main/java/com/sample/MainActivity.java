@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity implements MainView {
                 .onPauseUpdate(i -> 4)
                 .onStopUpdate(i -> 5)
                 .onDestroyUpdate(i -> 6)
-                .observe()
+                .observe(PublishSubject.create())
                 .subscribe(i -> Log.e("MainActivity", "non-null value updated : " + i));
 
         LiteCycle.with(null)
@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity implements MainView {
                 .onPauseUpdate(i -> 4)
                 .onStopUpdate(i -> 5)
                 .onDestroyUpdate(i -> 6)
-                .observe()
+                .observe(PublishSubject.create())
                 .subscribe(i -> Log.e("MainActivity", "null value updated : " + i));
 
 
@@ -54,14 +54,14 @@ public class MainActivity extends AppCompatActivity implements MainView {
                 .forLifeCycle(this)
                 .onResumeUpdate(i -> 3)
                 .onPauseUpdate(i -> 4)
-                .observe()
+                .observe(PublishSubject.create())
                 .subscribe(i -> Log.e("MainActivity", "lazy value updated : " + i));
 
         LiteCycle.defer(null)
                 .forLifeCycle(this)
                 .onResumeUpdate(i -> 3)
                 .onPauseUpdate(i -> 4)
-                .observe()
+                .observe(PublishSubject.create())
                 .subscribe(i -> Log.e("MainActivity", "defer(null) value updated : " + i));
 
 
@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity implements MainView {
         LiteCycle.with(intervalDisposable())
                 .forLifeCycle(this)
                 .onDestroyInvoke(Disposable::dispose)
-                .build();
+                .observe();
 
     }
 

@@ -128,8 +128,8 @@ public abstract class LiteObserver<T> implements LifecycleObserver {
                         || ((Fragment) owner).getActivity().isFinishing());
     }
 
-    Observable<T> observe() {
-        return observe(BehaviorSubject.<T>create());
+    void observe() {
+        observe(BehaviorSubject.<T>create());
     }
 
     Observable<T> observe(@NonNull Subject<T> observableType) {

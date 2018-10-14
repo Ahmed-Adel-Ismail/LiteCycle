@@ -197,21 +197,10 @@ public abstract class LiteObserverBuilder<T> {
     }
 
     /**
-     * observe on the life-Cycle events
-     *
-     * @return the {@link Observable} which will be notified when the value is updated, this is
-     * a {@link BehaviorSubject} by default, to change this type you may need to use
-     * {@link #observe(Subject)} instead
+     * start observation on life-Cycle events
      */
-    public final Observable<T> observe() {
-        return buildObserver().observe();
-    }
-
-    /**
-     * build the life-cycle observer
-     */
-    public final void build() {
-        observe();
+    public final void observe() {
+        buildObserver().observe();
     }
 
     abstract LiteObserver<T> buildObserver();

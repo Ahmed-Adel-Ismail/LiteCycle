@@ -6,6 +6,7 @@ import android.arch.lifecycle.ViewModel;
 import com.android.LiteCycle;
 
 import io.reactivex.Observable;
+import io.reactivex.subjects.BehaviorSubject;
 
 /**
  * Created by Ahmed Adel Ismail on 2/4/2018.
@@ -28,7 +29,7 @@ public class MVVMViewModel extends ViewModel {
                 .onPauseUpdate(i -> 4)
                 .onStopUpdate(i -> 5)
                 .onDestroyUpdate(i -> 6)
-                .observe();
+                .observe(BehaviorSubject.create());
     }
 
     public Observable<Integer> getMethodIndexer() {
