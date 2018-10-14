@@ -78,7 +78,7 @@ Those functions will not invoke while rotation, they will be invoked after onDes
 
 # Listen on value updates
 
-Since version <b>1.0.0</b>, the <i>observe()</i> method returns an <b> Rx Java 2 Observable </b> so you can subscribe to it and get notified when ever the value is changed, so in our sample example, we can write it this way
+Since version <b>1.2.1</b>, the <i>observe()</i> method returns an <b> Rx Java 2 Observable </b> so you can subscribe to it and get notified when ever the value is changed, so in our sample example, we can write it this way
 ```java
 Observable<Integer> integer = LiteCycle.with(10)
         .forLifeCycle(this)
@@ -88,11 +88,11 @@ Observable<Integer> integer = LiteCycle.with(10)
         .onPauseUpdate(i -> i + 1)
         .onStopUpdate(i -> i + 1)
         .onDestroyUpdate(i -> 10)
-        .observe();
+        .observe(BehaviorSubject.create());
 
 Disposable disposable = integer.subscribe(i -> Log.e("LiteCycle", "integer value " + i));
 ```    
-The Observable created by <i>observe()</i> method is a <b>BehaviorSubject</b>, if you want a different type, you can use the overloaded version of <i>observe(Subject)</i>, as follows :
+The Observable created by <i>observe(Subject)</i> method is a <b>BehaviorSubject</b>, if you want a different type, you can pass any RxJava Subject sub-class, as follows :
 ```java
 Observable<Integer> integer = LiteCycle.with(10)
             .forLifeCycle(this)
@@ -100,7 +100,7 @@ Observable<Integer> integer = LiteCycle.with(10)
             .onPauseUpdate(i -> i + 1)
             .observe(PublishSubject.create());
 ```    
-you do not need to care about <b>Observable</b> created from the <i>observe()</i> call, since it completes itself when the Life-Cycle Owner (Activity or Fragment) calls it's <i>onDestroy()</i>, so you can safely write the previous code as follows :
+you do not need to care about <b>Observable</b> created from the <i>observe(Subject)</i> call, since it completes itself when the Life-Cycle Owner (Activity or Fragment) calls it's <i>onDestroy()</i>, so you can safely write the previous code as follows :
 ```java
 LiteCycle.with(10)
         .forLifeCycle(this)
@@ -139,6 +139,6 @@ allprojects {
     Step 2. Add the dependency
 ```Gradle
 dependencies {
-    compile 'com.github.Ahmed-Adel-Ismail:LiteCycle:1.1.1'
+    compile 'com.github.Ahmed-Adel-Ismail:LiteCycle:1.2.1'
 }
 ```
