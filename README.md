@@ -106,7 +106,7 @@ LiteCycle.with(10)
         .forLifeCycle(this)
         .onResumeUpdate(i -> i + 1)
         .onPauseUpdate(i -> i + 1)
-        .observe()
+        .observe(PublishSubject.create())
         .map(i -> "integer value " + i)
         .subscribe(text -> Log.e("LiteCycle", text))
 ```
