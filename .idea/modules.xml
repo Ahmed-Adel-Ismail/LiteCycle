@@ -4,6 +4,8 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/LiteCycle.iml" filepath="$PROJECT_DIR$/LiteCycle.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/kotlin/kotlin.iml" filepath="$PROJECT_DIR$/kotlin/kotlin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/kotlinapp/kotlinapp.iml" filepath="$PROJECT_DIR$/kotlinapp/kotlinapp.iml" />
       <module fileurl="file://$PROJECT_DIR$/lite-cycle/lite-cycle.iml" filepath="$PROJECT_DIR$/lite-cycle/lite-cycle.iml" />
     </modules>
   </component>
