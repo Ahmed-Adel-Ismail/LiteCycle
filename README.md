@@ -3,7 +3,21 @@
 # LiteCycle
 A library that helps implementing Android's LifeCycleObserver interface for variables instead of Classes
 
-# Sample Code :
+# Sample Kotlin Code :
+For Kotlin, this library adds extension functions on LifecycleOwner to make it's life-cycle events accessible from any point, the extension functions are all available at this <a=href"https://github.com/Ahmed-Adel-Ismail/LiteCycle/blob/feature/kotlin-support/kotlin/src/main/java/com/android/LifecycleOwnerExtensions.kt">file</a> if you do not want to add a dependency to your project, but do not forget to add <b>DefaultLifecycleObserver</b> dependency in your gradle, which is the Java 8 version of architecture components life-cycle observer :   
+
+```kotlin
+// in your activity or fragment, or any class that implements LifecycleOwner interface :
+withOnCreate{ /* execute this code in onCreate() */ }
+withOnStart{ /* execute this code in onStart() */ }
+withOnResume{ /* execute this code in onResume() */ }
+withOnPause{ /* execute this code in onPause() */ }
+withOnStop{ /* execute this code in onStop() */ }
+withOnDestroy{ /* execute this code in onDestroy() */ }
+withOnFinishing{ /* execute this code in onDestroy() when Activity.isFinishing() returns true */ }
+```
+
+# Sample Java Code :
 ```java
 LiteCycle.with(10)
         .forLifeCycle(this)
@@ -136,9 +150,14 @@ allprojects {
     }
 }
 ```
-    Step 2. Add the dependency
+    Step 2. Add the dependency 
 ```Gradle
 dependencies {
-    compile 'com.github.Ahmed-Adel-Ismail:LiteCycle:1.2.1'
+    
+    // for Java
+    implementation 'com.github.Ahmed-Adel-Ismail:LiteCycle:1.2.1'
+    
+    // for kotlin
+    implementation 'com.github.Ahmed-Adel-Ismail.LiteCycle:kotlin:1.3.0' // notice version difference
 }
 ```
