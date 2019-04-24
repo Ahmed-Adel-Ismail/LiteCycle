@@ -4,7 +4,7 @@
 A library that helps implementing Android's LifeCycleObserver interface for variables instead of Classes
 
 # Sample Kotlin Code :
-For Kotlin, this library adds extension functions on LifecycleOwner to make it's life-cycle events accessible from any point, the extension functions are all available at this <a=href"https://github.com/Ahmed-Adel-Ismail/LiteCycle/blob/feature/kotlin-support/kotlin/src/main/java/com/android/LifecycleOwnerExtensions.kt">file</a> if you do not want to add a dependency to your project, but do not forget to add <b>DefaultLifecycleObserver</b> dependency in your gradle, which is the Java 8 version of architecture components life-cycle observer :   
+For Kotlin, this library adds extension functions on LifecycleOwner to make it's life-cycle events accessible from any point, the extension functions are all available at this <a href="https://github.com/Ahmed-Adel-Ismail/LiteCycle/blob/feature/kotlin-support/kotlin/src/main/java/com/android/LifecycleOwnerExtensions.kt">file</a> if you do not want to add a dependency to your project, but do not forget to add <b>DefaultLifecycleObserver</b> dependency in your gradle, which is the Java 8 version of architecture components life-cycle observer :   
 
 ```kotlin
 // in your activity or fragment, or any class that implements LifecycleOwner interface :
